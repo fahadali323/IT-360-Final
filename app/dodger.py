@@ -7,7 +7,7 @@ WINDOWWIDTH = 600
 WINDOWHEIGHT = 600
 TEXTCOLOR = (0, 0, 0)
 BACKGROUNDCOLOR = (255, 255, 255)
-FPS = 60 
+FPS = 30 
 BADDIEMINSIZE = 10
 BADDIEMAXSIZE = 40
 BADDIEMINSPEED = 1 
@@ -28,7 +28,7 @@ def waitForPlayerToPressKey():
                 if event.key == K_ESCAPE:    #presing ESQ quits.
                     terminate()
                 return
-def playerHasHitBaddie(playerReact, baddies):
+def playerHasHitBaddie(playerRect, baddies):
     for b in baddies:
         if playerRect.colliderect(b['rect']):
             return True
