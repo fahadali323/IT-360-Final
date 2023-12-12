@@ -26,8 +26,8 @@ let playerImage;
 
 function preload() {
   // Load images and sounds here
-  playerImage = loadImage('../assets/player.png');
-  baddieImage = loadImage('../assets/baddie.png');
+  playerImage = loadImage("../assets/player.png");
+  baddieImage = loadImage("../assets/baddie.png");
 }
 
 function setup() {
@@ -40,6 +40,22 @@ function setup() {
 
   // Start background music
   // backgroundMusic.loop();
+}
+
+function keyPressed() {
+  if (key === "x" || key === "X") {
+    reverseCheat = true;
+  } else if (key === "z" || key === "Z" ) {
+    slowCheat = true;
+  }
+}
+
+function keyReleased() {
+  if (key === "x" || key === "X") {
+    reverseCheat = false;
+  } else if (key === "z" || key === "Z") {
+    slowCheat = false;
+  }
 }
 
 function draw() {
@@ -100,12 +116,13 @@ function draw() {
     playerRect.y += PLAYERMOVERATE;
   }
 
+
   // Move the baddies down
   for (let b of baddies) {
     if (!reverseCheat && !slowCheat) {
       b.pos.y += b.speed;
     } else if (reverseCheat) {
-      b.pos.y -= 5;
+      b.pos.y -= 5; // Adjust the reverse speed as needed
     } else if (slowCheat) {
       b.pos.y += 1;
     }
@@ -135,8 +152,8 @@ function draw() {
   }
 
   // Draw the score and top score
-    drawCustomText('Score: ' + score, 10, 20);
-  drawCustomText('Top Score: ' + topScore, 10, 60);
+  drawCustomText("Score: " + score, 10, 20);
+  drawCustomText("Top Score: " + topScore, 10, 60);
 
   score++; // Increase score
 }
@@ -165,8 +182,12 @@ function gameOver() {
   // backgroundMusic.stop();
   gameOverSound.play();
 
-  drawCustomText('GAME OVER', WINDOWWIDTH / 3, WINDOWHEIGHT / 3);
-  drawCustomText('Press a key to play again.', WINDOWWIDTH / 3 - 80, WINDOWHEIGHT / 3 + 50);
+  drawCustomText("GAME OVER", WINDOWWIDTH / 3, WINDOWHEIGHT / 3);
+  drawCustomText(
+    "Press a key to play again.",
+    WINDOWWIDTH / 3 - 80,
+    WINDOWHEIGHT / 3 + 50
+  );
 
   noLoop();
 }
