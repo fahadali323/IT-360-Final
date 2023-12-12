@@ -26,8 +26,8 @@ let playerImage;
 
 function preload() {
   // Load images and sounds here
-  playerImage = loadImage('./assets/player.png');
-  baddieImage = loadImage('./assets/baddie.png');
+  playerImage = loadImage('../assets/player.png');
+  baddieImage = loadImage('../assets/baddie.png');
 }
 
 function setup() {
