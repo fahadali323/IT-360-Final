@@ -2,7 +2,7 @@ let WINDOWWIDTH = 600;
 let WINDOWHEIGHT = 600;
 let TEXTCOLOR;
 let BACKGROUNDCOLOR;
-let FPS = 30;
+let FPS = 45;
 let BADDIEMINSIZE = 10;
 let BADDIEMAXSIZE = 40;
 let BADDIEMINSPEED = 1;
@@ -32,6 +32,7 @@ function preload() {
 
 function setup() {
   createCanvas(WINDOWWIDTH, WINDOWHEIGHT);
+  frameRate(FPS);
   TEXTCOLOR = color(255);
   BACKGROUNDCOLOR = color(0);
 
@@ -89,13 +90,13 @@ function draw() {
   if (moveLeft && playerRect.x > 0) {
     playerRect.x -= PLAYERMOVERATE;
   }
-  if (moveRight && playerRect.x < WINDOWWIDTH) {
+  if (moveRight && playerRect.x < WINDOWWIDTH - playerImage.width) {
     playerRect.x += PLAYERMOVERATE;
   }
   if (moveUp && playerRect.y > 0) {
     playerRect.y -= PLAYERMOVERATE;
   }
-  if (moveDown && playerRect.y < WINDOWHEIGHT) {
+  if (moveDown && playerRect.y < WINDOWHEIGHT - playerImage.height) {
     playerRect.y += PLAYERMOVERATE;
   }
 
@@ -164,20 +165,12 @@ function gameOver() {
   // backgroundMusic.stop();
   gameOverSound.play();
 
-  drawText('GAME OVER', WINDOWWIDTH / 3, WINDOWHEIGHT / 3);
-  drawText('Press a key to play again.', WINDOWWIDTH / 3 - 80, WINDOWHEIGHT / 3 + 50);
+  drawCustomText('GAME OVER', WINDOWWIDTH / 3, WINDOWHEIGHT / 3);
+  drawCustomText('Press a key to play again.', WINDOWWIDTH / 3 - 80, WINDOWHEIGHT / 3 + 50);
 
   noLoop();
 }
 
-function keyPressed() {
-  if (keyCode === ESCAPE) {
-    noLoop();
-  } else {
-    loop();
-    resetGame();
-  }
-}
 
 function resetGame() {
   score = 0;
