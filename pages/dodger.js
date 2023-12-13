@@ -81,7 +81,7 @@ function drawCustomText(customText, x, y) {
 
 function gameOver() {
   // backgroundMusic.stop();
-  gameOverSound.play();
+  // gameOverSound.play();
 
   drawCustomText("GAME OVER", WINDOWWIDTH / 3, WINDOWHEIGHT / 3);
   drawCustomText(
@@ -91,6 +91,18 @@ function gameOver() {
   );
 
   noLoop();
+  function resetOnKeyPress() {
+    resetGame();
+    loop(); // Resume the loop
+    removeKeyListener(); // Remove the key press event listener
+  }
+
+  function removeKeyListener() {
+    window.removeEventListener('keydown', resetOnKeyPress);
+  }
+
+  // Listen for a key press to reset the game
+  window.addEventListener('keydown', resetOnKeyPress);
 }
 
 
