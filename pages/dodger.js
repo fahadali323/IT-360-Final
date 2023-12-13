@@ -58,6 +58,51 @@ function keyReleased() {
   }
 }
 
+
+function playerHasHitBaddie(player, baddies) {
+  for (let b of baddies) {
+    if (
+      player.x < b.pos.x + b.size &&
+      player.x + playerImage.width > b.pos.x &&
+      player.y < b.pos.y + b.size &&
+      player.y + playerImage.height > b.pos.y
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function drawCustomText(customText, x, y) {
+  fill(TEXTCOLOR);
+  textSize(16);
+  text(customText, x, y);
+}
+
+function gameOver() {
+  // backgroundMusic.stop();
+  gameOverSound.play();
+
+  drawCustomText("GAME OVER", WINDOWWIDTH / 3, WINDOWHEIGHT / 3);
+  drawCustomText(
+    "Press a key to play again.",
+    WINDOWWIDTH / 3 - 80,
+    WINDOWHEIGHT / 3 + 50
+  );
+
+  noLoop();
+}
+
+
+function resetGame() {
+  score = 0;
+  playerRect.x = WINDOWWIDTH / 2;
+  playerRect.y = WINDOWHEIGHT - 50;
+  baddies = [];
+  loop();
+  // backgroundMusic.loop();
+}
+
 function draw() {
   background(BACKGROUNDCOLOR);
 
@@ -156,48 +201,4 @@ function draw() {
   drawCustomText("Top Score: " + topScore, 10, 60);
 
   score++; // Increase score
-}
-
-function playerHasHitBaddie(player, baddies) {
-  for (let b of baddies) {
-    if (
-      player.x < b.pos.x + b.size &&
-      player.x + playerImage.width > b.pos.x &&
-      player.y < b.pos.y + b.size &&
-      player.y + playerImage.height > b.pos.y
-    ) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function drawCustomText(customText, x, y) {
-  fill(TEXTCOLOR);
-  textSize(16);
-  text(customText, x, y);
-}
-
-function gameOver() {
-  // backgroundMusic.stop();
-  gameOverSound.play();
-
-  drawCustomText("GAME OVER", WINDOWWIDTH / 3, WINDOWHEIGHT / 3);
-  drawCustomText(
-    "Press a key to play again.",
-    WINDOWWIDTH / 3 - 80,
-    WINDOWHEIGHT / 3 + 50
-  );
-
-  noLoop();
-}
-
-
-function resetGame() {
-  score = 0;
-  playerRect.x = WINDOWWIDTH / 2;
-  playerRect.y = WINDOWHEIGHT - 50;
-  baddies = [];
-  loop();
-  // backgroundMusic.loop();
 }
