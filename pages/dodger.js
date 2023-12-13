@@ -37,6 +37,18 @@ let baddieAddCounter = 0;
 let playerImage;
 let slowDownImage;
 
+//function to retrieve a value given the cookies key
+function getCookieValue(cookieKey) {
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [key, value] = cookie.trim().split('=');
+    if (key === cookieKey) {
+      return value;
+    }
+  }
+  return null; // Return null if the cookie key is not found
+}
+
 function preload() {
   // Load images and sounds here
   playerImage = loadImage("../assets/player.png");
@@ -49,6 +61,10 @@ function setup() {
   frameRate(FPS);
   TEXTCOLOR = color(255);
   //BACKGROUNDCOLOR = color(0);
+
+  //get top score from cookies
+  let value = getCookieValue('topScore');
+  topScore = value === null ? 0 : value;
 
   playerRect = createVector(WINDOWWIDTH / 2, WINDOWHEIGHT - 50);
 
@@ -109,7 +125,7 @@ function drawCustomText(customText, x, y) {
 function gameOver() {
   // backgroundMusic.stop();
   // gameOverSound.play();
-
+  document.cookie = `topScore=${topScore}; expires=${new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)}; path=/`;
   drawCustomText("GAME OVER", WINDOWWIDTH / 3, WINDOWHEIGHT / 3);
   drawCustomText(
     "Press a key to play again.",
@@ -177,7 +193,7 @@ function draw() {
     slowCheatTime++;
 
   }
-  console.log(baddieAddCounter);
+
   if (baddieAddCounter === ADDNEWBADDIERATE) {
     baddieAddCounter = 0;
     let baddieSize = int(random(BADDIEMINSIZE, BADDIEMAXSIZE));
